@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Email Extractor</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f6fb;
+      margin: 0;
+      padding: 0;
+      width: 320px;
+      min-height: 340px;
+      box-sizing: border-box;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      padding: 16px 16px 10px 16px;
+      border-bottom: 1px solid #e0e0e0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .logo {
+      width: 40px;
+      height: 40px;
+      margin-right: 12px;
+      border-radius: 8px;
+      background: #fff;
+      object-fit: contain;
+      border: 1px solid #e0e0e0;
+      padding: 2px;
+    }
+    .company-title {
+      font-size: 1.25em;
+      font-weight: 700;
+      color: #1a237e;
+      letter-spacing: 1px;
+    }
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 0px 18px 0 18px;
+      margin-bottom: 10px;
+    }
+    .action-btn {
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 7px 14px;
+      font-size: 0.95em;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-weight: 500;
+    }
+    .action-btn:active {
+      background: #1251a3;
+    }
+    h2 {
+      color: #333;
+      margin: 8px 0 10px 0;
+      font-size: 1.1em;
+      padding-left: 18px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    #email-list {
+      list-style: none;
+      padding: 0 8px 0 8px;
+      margin: 0;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    #email-list li {
+      background: #fff;
+      margin-bottom: 4px;
+      padding: 4px 4px;
+      border-radius: 7px;
+      box-shadow: 0 1px 4px rgba(30, 136, 229, 0.07);
+      font-size: 1em;
+      color: #222;
+      word-break: break-all;
+      display: flex;
+      align-items: center;
+      transition: background 0.2s;
+      border-left: 4px solid #1976d2;
+    }
+    #email-list li:hover {
+      background: #e3f2fd;
+    }
+    .empty {
+      color: #888;
+      text-align: center;
+      margin-top: 30px;
+      font-size: 1em;
+      letter-spacing: 0.2px;
+    }
+    .copied-msg {
+      color: #388e3c;
+      font-size: 0.95em;
+      text-align: right;
+      padding-right: 18px;
+      margin-bottom: 0;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img class="logo" src="https://cnetinfosystem.com/assets/images/logo-dark.png" alt="CNETINFOSYSTEM Logo">
+    <span class="company-title">
+      cnetinfosystem
+      <span id="version" style="font-size:0.85em; color:#1976d2; margin-left:6px;"></span>
+      <span style="display: block;font-size: 0.5em;">
+         - Email Extractor
+      </span>
+    </span>
+  </div>
+  <h2>Saved Emails</h2>
+  <div class="actions">
+    <button class="action-btn" id="copy-btn">Copy All</button>
+    <button class="action-btn" id="clear-btn" style="background: #c95134;">Clear All</button>
+    <label style="display:flex;align-items:center;gap:4px;font-size:0.97em;margin-left:auto;">
+      <input type="checkbox" id="notify-toggle" style="accent-color:#1976d2;">
+      <span>Notifications</span>
+    </label>
+  </div>
+  <div class="copied-msg" id="copied-msg">Copied!</div>
+  <ul id="email-list"></ul>
+  <div id="empty-message" class="empty" style="display:none;">No emails found on visited pages.</div>
+  <script src="popup.js"></script>
+</body>
+</html>
