@@ -13,7 +13,7 @@ A Chrome Extension to extract email addresses from any web page you visit. Extra
 ## Installation
 
 1. Download or clone this repository.
-2. Go to `chrome://extensions/` in your browser.
+2. Go to `chrome://extensions/`[Download](https://chromewebstore.google.com/detail/cnetinfosystem-email-extr/bgdjkhlbcenendlkchonblmjajnjggpj) in your browser.
 3. Enable "Developer mode" (top right).
 4. Click "Load unpacked" and select the project folder.
 
@@ -36,7 +36,7 @@ This extension requests the following permissions:
 - **No personal data or browsing information is collected, transmitted, or shared** with external servers or third parties.
 - All extracted emails are stored **locally** in your browser and can be managed by you at any time.
 
-For more details, see [email_extention_privacy.html](email_extention_privacy.html).
+For more details, see [privacy](https://cnetinfosystem.com/assets/email_extention_privacy.html).
 
 ## Project Structure
 
