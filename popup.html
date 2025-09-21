@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Email Extractor</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
@@ -11,124 +12,353 @@
       width: 320px;
       min-height: 340px;
       box-sizing: border-box;
+      overflow-x: hidden;
     }
-    .header {
+    .material-icons {
+      font-size: 14px;
+    }
+    .ee-views-container {
+      display: flex;
+      width: 200%;
+      transition: transform 0.3s ease;
+    }
+    .ee-views-container.show-settings {
+      transform: translateX(-50%);
+    }
+    .ee-view {
+      width: 50%;
+      flex-shrink: 0;
+    }
+    .ee-back-btn {
+      background: #f5f5f5;
+      border: 1px solid #e0e0e0;
+      color: #333;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 4px;
       display: flex;
       align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    .ee-back-btn:hover {
+      background: #e0e0e0;
+    }
+    .ee-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       background: #fff;
-      padding: 16px 16px 10px 16px;
+      padding: 16px;
       border-bottom: 1px solid #e0e0e0;
       box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     }
-    .logo {
+    .ee-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .ee-logo {
       width: 40px;
       height: 40px;
-      margin-right: 12px;
       border-radius: 8px;
       background: #fff;
       object-fit: contain;
       border: 1px solid #e0e0e0;
       padding: 2px;
     }
-    .company-title {
+    .ee-title {
       font-size: 1.25em;
       font-weight: 700;
       color: #1a237e;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
     }
-    .actions {
+    .ee-settings-btn {
+      background: #f5f5f5;
+      border: 1px solid #e0e0e0;
+      color: #333;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    .ee-settings-btn:hover {
+      background: #e0e0e0;
+    }
+    .ee-settings-icon {
+      font-size: 16px;
+    }
+    .ee-actions {
       display: flex;
       justify-content: flex-end;
       gap: 10px;
-      padding: 0px 18px 0 18px;
-      margin-bottom: 10px;
+      padding: 16px;
+      background: #fff;
+      margin: 16px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
-    .action-btn {
+    .ee-button {
       background: #1976d2;
       color: #fff;
       border: none;
-      border-radius: 5px;
-      padding: 7px 14px;
-      font-size: 0.95em;
+      border-radius: 4px;
+      padding: 8px 16px;
       cursor: pointer;
-      transition: background 0.2s;
+      font-size: 14px;
       font-weight: 500;
+      transition: background 0.2s;
+      width: 50%;
     }
-    .action-btn:active {
-      background: #1251a3;
+    .ee-button:hover {
+      background: #1565c0;
     }
-    h2 {
+    .ee-button-danger {
+      background: #dc3545;
+    }
+    .ee-button-danger:hover {
+      background: #c82333;
+    }
+    .ee-heading {
       color: #333;
-      margin: 8px 0 10px 0;
       font-size: 1.1em;
-      padding-left: 18px;
       font-weight: 600;
-      letter-spacing: 0.5px;
     }
-    #email-list {
+    .ee-email-list {
       list-style: none;
-      padding: 0 8px 0 8px;
+      padding: 0 16px;
       margin: 0;
       max-height: 200px;
       overflow-y: auto;
     }
-    #email-list li {
+    .ee-email-item {
       background: #fff;
-      margin-bottom: 4px;
-      padding: 4px 4px;
-      border-radius: 7px;
-      box-shadow: 0 1px 4px rgba(30, 136, 229, 0.07);
-      font-size: 1em;
-      color: #222;
+      margin-bottom: 8px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      font-size: 14px;
+      color: #333;
       word-break: break-all;
-      display: flex;
-      align-items: center;
-      transition: background 0.2s;
-      border-left: 4px solid #1976d2;
+      border-left: 3px solid #1976d2;
     }
-    #email-list li:hover {
-      background: #e3f2fd;
-    }
-    .empty {
-      color: #888;
+    .ee-empty {
+      color: #666;
       text-align: center;
-      margin-top: 30px;
-      font-size: 1em;
-      letter-spacing: 0.2px;
+      margin: 32px 16px;
+      font-size: 14px;
     }
-    .copied-msg {
-      color: #388e3c;
-      font-size: 0.95em;
+    .ee-copied {
+      color: #28a745;
+      font-size: 14px;
       text-align: right;
-      padding-right: 18px;
-      margin-bottom: 0;
+      padding: 0 16px;
+      margin: 8px 0;
       display: none;
     }
+    .ee-notify {
+      margin: 16px;
+      font-size: 14px;
+      color: #555;
+    }
+    .ee-version {
+      color: #888;
+      font-size: 12px;
+      text-align: right;
+      padding: 0 16px;
+      margin: 8px 0;
+    }
+    .ee-settings-content {
+      padding: 16px;
+    }
+    .ee-domain-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .ee-input-row {
+      display: flex;
+      gap: 8px;
+    }
+    .ee-input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .ee-current-tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      background: #f5f5f5;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      color: #333;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .ee-current-tab-btn:hover {
+      background: #e0e0e0;
+    }
+    .ee-excluded-domains {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .ee-excluded-domains li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .ee-delete-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 4px 8px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .ee-delete-btn:hover {
+      background: #c82333;
+    }
+
+
+
+    @keyframes love {
+        0% {
+            font-size: 0;
+            opacity: 0;
+            padding-left:10px;
+        }
+        25% {
+            font-size: 16px;
+            opacity: 1;
+            padding-left:20px;
+        }
+        50% {
+            padding-left:0px;
+        }
+        75% {
+            font-size: 28px;
+            opacity: 1;
+            padding-left:20px;
+        }
+        100% {
+            font-size: 32px;
+            opacity: 0;
+            line-height: 25px;
+            padding-left:10px;
+        }
+    }
+    .heart {
+        display: none;
+        width: 50px;
+        height: 100px;
+        line-height: 100px;
+        vertical-align: bottom;
+        text-align: center;
+        color: red;
+    }
+    .heart.animate {
+        display: block;
+        animation: love 1s ease-in-out;
+    }
+
   </style>
 </head>
 <body>
-  <div class="header">
-    <img class="logo" src="https://cnetinfosystem.com/assets/images/logo-dark.png" alt="CNETINFOSYSTEM Logo">
-    <span class="company-title">
-      cnetinfosystem
-      <span id="version" style="font-size:0.85em; color:#1976d2; margin-left:6px;"></span>
-      <span style="display: block;font-size: 0.5em;">
-         - Email Extractor
-      </span>
-    </span>
+    <div class="ee-views-container">
+    <!-- Main View -->
+    <div class="ee-view" id="main-view">
+      <div class="ee-header">
+        <div class="ee-header-left">
+          <img class="ee-logo" src="logo_128.png" alt="Email Extractor">
+          <div class="ee-title">
+            CNETINFOSYSTEM
+            <span class="ee-subtitle" style="font-size: 13px; color: #1976d2;"> - Email Extractor</span>
+            <span id="version" style="font-size: 0.7em; color: #1976d2; margin-left: 4px;"> </span>
+          </div>
+        </div>
+        <button id="settings-btn" class="ee-settings-btn">
+          <span class="ee-settings-icon"><i class="material-icons">settings</i></span>
+        </button>
+      </div>
+
+      <h2 class="ee-heading" style="margin: 16px;">Saved Emails</h2>
+      <div class="ee-actions">
+        
+        <button class="ee-button" id="copy-btn">
+          <div style="position: absolute; border: 0; z-index: 999999; margin-top: -53px;"><div class="heart">&#9829;</div></div>
+
+          <i class="material-icons">content_copy</i> Copy All </button>
+        <button class="ee-button ee-button-danger" id="clear-btn"><i class="material-icons">delete</i> Clear All</button>
+      </div>
+
+      <ul id="email-list" class="ee-email-list"></ul>
+      <p id="empty-message" class="ee-empty">No emails found yet.</p>
+      <p id="copied-msg" class="ee-copied"><i class="material-icons">check</i> Copied to clipboard</p>
+
+    </div>
+
+    <!-- Settings View -->
+    <div class="ee-view" id="settings-view">
+      <div class="ee-header">
+        <div class="ee-header-left">
+          <button id="back-btn" class="ee-back-btn">
+            <i class="material-icons">arrow_back</i>
+          </button>
+          <div class="ee-title">Settings</div>
+        </div>
+      </div>
+
+      
+
+
+
+      
+
+        <div class="ee-settings-content">
+        
+        <h2 class="ee-heading">Basic Settings</h2>
+        <div class="ee-notify">
+          <label>
+            <input type="checkbox" id="notify-toggle">
+            Enable Notifications
+          </label>
+        </div>
+
+
+        <br><br>
+          
+        <h2 class="ee-heading">Excluded Domains</h2>
+        <div class="ee-domain-input-group">
+          <button id="current-tab-btn" class="ee-current-tab-btn">
+            <span><i class="material-icons">add</i></span> Add Current Tab's Domain
+          </button>
+          <div class="ee-input-row">
+            <input type="text" id="domain-input" class="ee-input" placeholder="e.g., mail.google.com">
+            <button id="add-domain" class="ee-button"><i class="material-icons">add</i> Add</button>
+          </div>
+        </div>
+        <ul id="excluded-domains" class="ee-excluded-domains"></ul>
+      </div>
+
+      
+      </div>
+    </div>
   </div>
-  <h2>Saved Emails</h2>
-  <div class="actions">
-    <button class="action-btn" id="copy-btn">Copy All</button>
-    <button class="action-btn" id="clear-btn" style="background: #c95134;">Clear All</button>
-    <label style="display:flex;align-items:center;gap:4px;font-size:0.97em;margin-left:auto;">
-      <input type="checkbox" id="notify-toggle" style="accent-color:#1976d2;">
-      <span>Notifications</span>
-    </label>
-  </div>
-  <div class="copied-msg" id="copied-msg">Copied!</div>
-  <ul id="email-list"></ul>
-  <div id="empty-message" class="empty" style="display:none;">No emails found on visited pages.</div>
   <script src="popup.js"></script>
 </body>
 </html>

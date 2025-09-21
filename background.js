@@ -1,11 +1,25 @@
 function injectExtractor(tabId, url) {
   if (/^https?:/.test(url)) {
+    // Inject the extractor script
     chrome.scripting.executeScript({
       target: { tabId: tabId },
       files: ["extractor.js"]
+    }).catch(err => {
+      console.error('[Email Extractor] Script injection error:', err);
     });
   }
 }
+
+// Handle messages from content script
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === "saveEmails") {
+    chrome.storage.local.get({emails: []}, function(result) {
+      const savedEmails = new Set(result.emails);
+      message.emails.forEach(email => savedEmails.add(email));
+      chrome.storage.local.set({emails: Array.from(savedEmails)});
+    });
+  }
+});
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === "complete" && tab.url) {
