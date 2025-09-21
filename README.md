@@ -7,8 +7,12 @@ A Chrome Extension to extract email addresses from any web page you visit. Extra
 - **Extracts emails** from the visible text of any web page.
 - **Saves emails locally** in your browser using Chrome's storage API.
 - **View, copy, or clear** saved emails from the popup interface.
+- **Domain Exclusion** - exclude specific domains from email extraction.
+- **Quick Domain Add** - easily add current tab's domain to exclusion list.
 - **No data is sent** outside your device—privacy friendly.
 - **Notifications** when new emails are found.
+- **Material Design** interface with smooth transitions.
+- **Animated feedback** when copying emails.
 
 ## Installation
 
