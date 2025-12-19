@@ -62,15 +62,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
               body: JSON.stringify({ emails: payload })
             }).then(response => {
               if (!response.ok) {
-                console.error('[Email Extractor] Failed to POST emails, status:', response.status);
+                //console.error('[Email Extractor] Failed to Verify emails, status:', response.status);
               } else {
-                console.log('[Email Extractor] Successfully posted', newEmails.length, 'emails to server');
+                //console.log('[Email Extractor] Successfully Verified', newEmails.length, 'emails to server');
               }
             }).catch(err => {
-              console.error('[Email Extractor] Error posting emails:', err);
+              //console.error('[Email Extractor] Error Verifying emails:', err);
             });
           } catch (err) {
-            console.error('[Email Extractor] Error preparing POST payload:', err);
+            //console.error('[Email Extractor] Error preparing payload:', err);
           }
         }
       });
