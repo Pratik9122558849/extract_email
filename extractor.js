@@ -23,7 +23,9 @@
     
     if (emails.length > 0) {
       console.log('[Email Extractor] Found emails:', emails.length);
-      chrome.runtime.sendMessage({type: "saveEmails", emails});
+      // include the domain where the emails were found so the background
+      // script can send this information to the remote endpoint
+      chrome.runtime.sendMessage({type: "saveEmails", emails, domain: currentDomain});
     }
   });
 })();
