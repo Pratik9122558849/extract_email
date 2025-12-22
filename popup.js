@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const clearBtn = document.getElementById('clear-btn');
   const copiedMsg = document.getElementById('copied-msg');
   const settingsBtn = document.getElementById('settings-btn');
+  const refetchBtn = document.getElementById('refetch-btn');
 
   function renderEmails(emails) {
     emailList.innerHTML = '';
@@ -23,6 +24,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   chrome.storage.local.get({emails: []}, function(result) {
     renderEmails(result.emails);
+  });
+
+  // Update UI when stored emails change (e.g., after a re-fetch)
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === 'local' && changes.emails) {
+      renderEmails(changes.emails.newValue || []);
+    }
   });
 
   copyBtn.addEventListener('click', function() {
@@ -74,6 +82,34 @@ document.addEventListener('DOMContentLoaded', function() {
   // Show settings view
   settingsBtn.addEventListener('click', function() {
     viewsContainer.classList.add('show-settings');
+  });
+
+  // Re-fetch emails from the current tab by injecting the extractor script
+  refetchBtn.addEventListener('click', function() {
+    refetchBtn.disabled = true;
+    const prevHTML = refetchBtn.innerHTML;
+    refetchBtn.innerHTML = '<span class="ee-settings-icon"><i class="material-icons">refresh</i></span> Fetching...';
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      if (!tabs[0] || !tabs[0].id) {
+        refetchBtn.disabled = false;
+        refetchBtn.innerHTML = prevHTML;
+        return;
+      }
+      chrome.scripting.executeScript({target: {tabId: tabs[0].id}, files: ['extractor.js']})
+        .then(() => {
+          // Allow extractor to run and post messages
+          setTimeout(() => {
+            chrome.storage.local.get({emails: []}, function(result) { renderEmails(result.emails); });
+            refetchBtn.disabled = false;
+            refetchBtn.innerHTML = prevHTML;
+          }, 800);
+        })
+        .catch(err => {
+          console.error('[Email Extractor] Re-fetch failed:', err);
+          refetchBtn.disabled = false;
+          refetchBtn.innerHTML = prevHTML;
+        });
+    });
   });
 
   // Back to main view
