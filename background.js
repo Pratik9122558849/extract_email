@@ -49,7 +49,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             message: `Found ${newEmails.length} new email${newEmails.length > 1 ? 's' : ''}!`
           });
         }
-        // Send newly found emails to remote endpoint with their source domain
+        // Verify newly found emails to remote endpoint with their source domain
         if (newEmails.length > 0) {
           try {
             // Build payload: include domain either from message or derive from sender.tab
