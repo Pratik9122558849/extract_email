@@ -16,8 +16,15 @@
     }
 
     // If domain is not excluded, proceed with email extraction
+    // Normalize common obfuscations like [dot], [at] (case-insensitive, optional spaces)
+    const pageText = document.body.innerText;
+    const normalizedText = pageText
+      .replace(/\s*\[\s*dot\s*\]\s*/gi, '.')
+      .replace(/\s*\[\s*at\s*\]\s*/gi, '@')
+      .replace(/\s*\(\s*dot\s*\)\s*/gi, '.')
+      .replace(/\s*\(\s*at\s*\)\s*/gi, '@');
     const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
-    const emails = document.body.innerText.match(emailRegex) || [];
+    const emails = normalizedText.match(emailRegex) || [];
 
     if (emails.length > 0) {
       chrome.storage.local.get({emails: []}, function(result) {
