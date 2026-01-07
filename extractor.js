@@ -56,7 +56,7 @@
       //                       normalizeText(decodeHTML(attrText)) + ' ' +
       //                       normalizeText(decodeHTML(htmlText));
       
-      const normalizedText = normalizeText(decodeHTML(htmlText));
+      const normalizedText = pageText;
 
       //console.log('[Email Extractor] normalizedText snippet:', normalizedText.slice(0, 300));
       
