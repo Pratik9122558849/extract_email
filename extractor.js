@@ -52,9 +52,12 @@
       
       
       // Decode HTML entities then normalize obfuscations
-      const normalizedText = normalizeText(decodeHTML(pageText)) + ' ' +
-                             normalizeText(decodeHTML(attrText)) + ' ' +
-                             normalizeText(decodeHTML(htmlText));
+      //const normalizedText = normalizeText(decodeHTML(pageText)) + ' ' +
+      //                       normalizeText(decodeHTML(attrText)) + ' ' +
+      //                       normalizeText(decodeHTML(htmlText));
+      
+      const normalizedText = normalizeText(decodeHTML(htmlText));
+
       //console.log('[Email Extractor] normalizedText snippet:', normalizedText.slice(0, 300));
       
 
